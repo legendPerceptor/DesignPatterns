@@ -17,3 +17,15 @@ The second group is in the middle so we think of (18) Mediator. Remember we have
 Finally, there are (22) Strategy and (23) Vistor. They are often used together so they are in their own group.
 
 In this way, you can easily remember all the 23 design patterns and recite it in whatever order. Next, we will start trying to understand what they actully do.
+
+## 2. Self-explained examples
+
+The best way to understand each design pattern is to implement them to do some tasks. I hope to build similar design pattern examples in multiple languages (including C++, Go, Python, Rust, etc.) Currently, I focus mainly on C++ implementations. The code lives in ./cpp folder. You can build and run the C++ demo using the following commands.
+
+```bash
+mkdir -p cpp/build
+cd cpp/build
+cmake ..
+cmake --build .
+./DesignPatternDemo
+```
