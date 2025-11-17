@@ -70,6 +70,6 @@ class SpreadsheetApp : public Application {
     }
 };
 
-}; // namespace FactoryMethod
+} // namespace FactoryMethod
 
 #endif

@@ -64,6 +64,6 @@ class HttpRequestBuilder {
     HttpRequest req_;
 };
 
-}; // namespace Builder
+} // namespace Builder
 
 #endif

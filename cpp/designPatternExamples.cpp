@@ -68,3 +68,9 @@ void PrototypeExample () {
     std::cout << "r1: ";
     r1->draw ();
 }
+
+void SingletonExample () {
+    // The log will be written into app.log file that should be in your current workdir.
+    Singleton::Logger::instance ().log ("This is a singleton instance's log");
+    Singleton::Logger::instance ().log ("Application exiting.");
+}

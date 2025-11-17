@@ -16,5 +16,7 @@ int main () {
     BuilderExample ();
     simple_log ("Prototype");
     PrototypeExample ();
+    simple_log ("Singleton");
+    SingletonExample ();
     return 0;
 }

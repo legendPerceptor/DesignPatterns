@@ -103,5 +103,5 @@ class PrototypeRegistry {
     std::unordered_map<std::string, std::unique_ptr<Shape>> prototypes_;
 };
 
-}; // namespace Prototype
+} // namespace Prototype
 #endif

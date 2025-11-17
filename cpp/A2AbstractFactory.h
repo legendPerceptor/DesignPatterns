@@ -109,6 +109,6 @@ class Application {
     std::unique_ptr<GUIFactory> factory_;
 };
 
-}; // namespace AbstractFactory
+} // namespace AbstractFactory
 
 #endif
