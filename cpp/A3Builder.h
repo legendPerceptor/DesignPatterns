@@ -7,6 +7,9 @@ You want to avoid telescoping constructors like
 Thing(a) / Thing(a, b) / Thing(a, b, c, d, e, ...)
 */
 
+#ifndef A3_BUILDER_H
+#define A3_BUILDER_H
+
 #include <string>
 #include <utility>
 
@@ -62,3 +65,5 @@ class HttpRequestBuilder {
 };
 
 }; // namespace Builder
+
+#endif

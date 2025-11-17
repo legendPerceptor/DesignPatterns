@@ -12,6 +12,9 @@ virtual Product* createProduct() = 0;
 return a specific product.
 */
 
+#ifndef A1_FACTORY_METHOD_H
+#define A1_FACTORY_METHOD_H
+
 #include <iostream>
 #include <memory>
 
@@ -68,3 +71,5 @@ class SpreadsheetApp : public Application {
 };
 
 }; // namespace FactoryMethod
+
+#endif

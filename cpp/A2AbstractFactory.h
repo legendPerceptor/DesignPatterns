@@ -9,6 +9,9 @@ Concrete products: `WinButton`, `MacButton`, `WinCheckbox`, `MacCheckbox`, etc.
 Concrete factories: `WinFactory`, `MacFactory`, each creates a complete family of matching products.
 */
 
+#ifndef A2_ABSTRACT_FACTORY_H
+#define A2_ABSTRACT_FACTORY_H
+
 #include <iostream>
 #include <memory>
 
@@ -107,3 +110,5 @@ class Application {
 };
 
 }; // namespace AbstractFactory
+
+#endif
