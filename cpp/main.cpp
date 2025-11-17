@@ -1,5 +1,9 @@
+#include <iostream>
+#include <string>
+
 #include "A1FactoryMethod.h"
 #include "A2AbstractFactory.h"
+#include "A3Builder.h"
 
 void FactoryMethodExample (bool useSpreadSheet = false) {
     std::unique_ptr<FactoryMethod::Application> app;
@@ -27,8 +31,27 @@ void AbstractFactoryExample (bool isWindows = false) {
     app.renderUI ();
 }
 
+void BuilderExample () {
+    Builder::HttpRequest req = Builder::HttpRequestBuilder ()
+                               .method ("POST")
+                               .url ("https://example.com/api")
+                               .body ("{\"id\":42}")
+                               .timeout (5000)
+                               .build ();
+
+    std::cout << req.method << " " << req.url << " timeout=" << req.timeoutMs << "ms\n";
+}
+
+void simple_log (std::string_view log) {
+    std::cout << "-----" << log << "-----" << std::endl;
+}
+
 int main () {
+    simple_log ("Factory Method");
     FactoryMethodExample ();
+    simple_log ("Abstract Factory");
     AbstractFactoryExample ();
+    simple_log ("Builder");
+    BuilderExample ();
     return 0;
 }
