@@ -4,9 +4,11 @@
 #include "A1FactoryMethod.h"
 #include "A2AbstractFactory.h"
 #include "A3Builder.h"
+#include "A4Prototype.h"
 
 void FactoryMethodExample (bool useSpreadSheet = false);
 void AbstractFactoryExample (bool isWindows = false);
 void BuilderExample ();
+void PrototypeExample ();
 
 #endif

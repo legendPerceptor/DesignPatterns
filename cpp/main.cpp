@@ -14,5 +14,7 @@ int main () {
     AbstractFactoryExample ();
     simple_log ("Builder");
     BuilderExample ();
+    simple_log ("Prototype");
+    PrototypeExample ();
     return 0;
 }
