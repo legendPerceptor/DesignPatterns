@@ -18,5 +18,9 @@ int main () {
     PrototypeExample ();
     simple_log ("Singleton");
     SingletonExample ();
+    simple_log ("Adapter");
+    AdapterExample ();
+    simple_log ("Bridge");
+    BridgeExample ();
     return 0;
 }

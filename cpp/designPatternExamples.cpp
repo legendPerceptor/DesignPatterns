@@ -74,3 +74,57 @@ void SingletonExample () {
     Singleton::Logger::instance ().log ("This is a singleton instance's log");
     Singleton::Logger::instance ().log ("Application exiting.");
 }
+
+void AdapterExample () {
+    std::cout << "\n--- Adapter Pattern Example ---\n";
+    std::cout << "Testing AudioPlayer with different formats:\n\n";
+
+    Adapter::AudioPlayer player;
+
+    // Built-in format (no adapter needed)
+    std::cout << "1. Playing MP3 (built-in support):\n";
+    player.play ("mp3", "song.mp3");
+
+    // Adapter converts these to work with MediaPlayer interface
+    std::cout << "\n2. Playing MP4 (using adapter):\n";
+    player.play ("mp4", "movie.mp4");
+
+    std::cout << "\n3. Playing VLC (using adapter):\n";
+    player.play ("vlc", "video.vlc");
+
+    // Unsupported format
+    std::cout << "\n4. Trying unsupported format:\n";
+    player.play ("avi", "movie.avi");
+}
+
+void BridgeExample () {
+    std::cout << "\n--- Bridge Pattern Example ---\n";
+    std::cout << "Testing RemoteControls with different Devices:\n\n";
+
+    // Test 1: Basic Remote with TV
+    std::cout << "1. Basic Remote with Sony TV:\n";
+    auto sonyTV = std::make_unique<Bridge::TV> ("Sony");
+    Bridge::RemoteControl basicRemote (std::move (sonyTV));
+    basicRemote.togglePower ();
+    basicRemote.volumeUp ();
+    basicRemote.volumeUp ();
+    basicRemote.togglePower ();
+
+    // Test 2: Advanced Remote with Radio
+    std::cout << "\n2. Advanced Remote with Radio:\n";
+    auto radio = std::make_unique<Bridge::Radio> ("98.5 FM");
+    Bridge::AdvancedRemoteControl advancedRemote (std::move (radio));
+    advancedRemote.togglePower ();
+    advancedRemote.volumeUp ();
+    advancedRemote.mute ();
+    advancedRemote.setChannel (5);
+
+    // Test 3: Advanced Remote with different TV
+    std::cout << "\n3. Advanced Remote with LG TV:\n";
+    auto lgTV = std::make_unique<Bridge::TV> ("LG");
+    Bridge::AdvancedRemoteControl lgRemote (std::move (lgTV));
+    lgRemote.togglePower ();
+    lgRemote.volumeUp ();
+    lgRemote.setChannel (42);
+    lgRemote.togglePower ();
+}
