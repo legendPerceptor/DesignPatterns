@@ -1,0 +1,12 @@
+# Pre-commit configuration for DesignPatterns C++ project
+# See https://pre-commit.com for more information
+
+repos:
+  - repo: local
+    hooks:
+      - id: clang-format
+        name: clang-format
+        entry: clang-format
+        language: system
+        types: [c++]
+        args: ['-i', '--style=file']
