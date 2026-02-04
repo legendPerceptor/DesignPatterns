@@ -4,7 +4,7 @@ This repo aims to explain all the 23 design patterns in a systematic way, and pr
 
 ## A clever way to remember all 23 design patterns
 
-There are 5 builder type patterns, 7 structure related patterns, and 11 behavioral patterns. The 11 behaviroal patterns can be further divided into 5+4+2 patterns and the reason will be explained later.
+The 23 design patterns consist of 5 creational patterns, 7 structural patterns, and 11 behavioral patterns. The 11 behaviroal patterns can be further divided into 5+4+2 patterns and the reason will be explained later.
 
 For builder type patterns, we have two factories: (1) Factory Method, (2) Abstract Factory. Then because of builder type, we have (3) Builder. You will build a prototype before making it perfect, so we think of (4) Prototype. Finally, there is a pattern where only one instance could exist, that is (5) Singleton.
 
