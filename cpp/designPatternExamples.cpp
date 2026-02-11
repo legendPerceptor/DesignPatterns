@@ -128,3 +128,62 @@ void BridgeExample () {
     lgRemote.setChannel (42);
     lgRemote.togglePower ();
 }
+
+void CompositeExample () {
+    std::cout << "\n--- Composite Pattern Example ---\n";
+    std::cout << "Building a file system structure:\n\n";
+
+    // Create individual files
+    auto file1 = std::make_shared<Composite::File> ("readme.txt", 1024);
+    auto file2 = std::make_shared<Composite::File> ("main.cpp", 4096);
+    auto file3 = std::make_shared<Composite::File> ("utils.cpp", 2048);
+    auto file4 = std::make_shared<Composite::File> ("config.json", 512);
+
+    // Create directories and add files
+    auto srcDir = std::make_shared<Composite::Directory> ("src");
+    srcDir->add (file2);
+    srcDir->add (file3);
+
+    auto configDir = std::make_shared<Composite::Directory> ("config");
+    configDir->add (file4);
+
+    auto rootDir = std::make_shared<Composite::Directory> ("project");
+    rootDir->add (file1);
+    rootDir->add (srcDir);
+    rootDir->add (configDir);
+
+    // Print the entire structure (treats all nodes uniformly)
+    rootDir->print ();
+
+    // Calculate total size (works for both files and directories)
+    std::cout << "\nTotal project size: " << rootDir->size () << " bytes\n";
+}
+
+void DecoratorExample () {
+    std::cout << "\n--- Decorator Pattern Example ---\n";
+    std::cout << "Ordering beverages with various toppings:\n\n";
+
+    // Simple espresso
+    std::cout << "1. Simple Espresso:\n";
+    std::unique_ptr<Decorator::Beverage> beverage1 =
+    std::make_unique<Decorator::Espresso> ();
+    std::cout << "  " << beverage1->getDescription () << " $" << beverage1->cost () << "\n";
+
+    // Dark Roast with double Mocha and Whip
+    std::cout << "\n2. Dark Roast + Mocha + Mocha + Whip:\n";
+    std::unique_ptr<Decorator::Beverage> beverage2 =
+    std::make_unique<Decorator::DarkRoast> ();
+    beverage2 = std::make_unique<Decorator::Mocha> (std::move (beverage2));
+    beverage2 = std::make_unique<Decorator::Mocha> (std::move (beverage2));
+    beverage2 = std::make_unique<Decorator::Whip> (std::move (beverage2));
+    std::cout << "  " << beverage2->getDescription () << " $" << beverage2->cost () << "\n";
+
+    // House Blend with Soy, Mocha, and Whip
+    std::cout << "\n3. House Blend + Soy + Mocha + Whip:\n";
+    std::unique_ptr<Decorator::Beverage> beverage3 =
+    std::make_unique<Decorator::HouseBlend> ();
+    beverage3 = std::make_unique<Decorator::Soy> (std::move (beverage3));
+    beverage3 = std::make_unique<Decorator::Mocha> (std::move (beverage3));
+    beverage3 = std::make_unique<Decorator::Whip> (std::move (beverage3));
+    std::cout << "  " << beverage3->getDescription () << " $" << beverage3->cost () << "\n";
+}

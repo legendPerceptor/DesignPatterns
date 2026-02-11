@@ -22,5 +22,9 @@ int main () {
     AdapterExample ();
     simple_log ("Bridge");
     BridgeExample ();
+    simple_log ("Composite");
+    CompositeExample ();
+    simple_log ("Decorator");
+    DecoratorExample ();
     return 0;
 }
