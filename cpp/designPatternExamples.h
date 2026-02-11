@@ -13,6 +13,9 @@
 #include "B5Facade.h"
 #include "B6Flyweight.h"
 #include "B7Proxy.h"
+#include "C1ChainOfResponsibility.h"
+#include "C2Command.h"
+#include "C3Iterator.h"
 
 void FactoryMethodExample (bool useSpreadSheet = false);
 void AbstractFactoryExample (bool isWindows = false);
@@ -26,5 +29,8 @@ void DecoratorExample ();
 void FacadeExample ();
 void FlyweightExample ();
 void ProxyExample ();
+void ChainOfResponsibilityExample ();
+void CommandExample ();
+void IteratorExample ();
 
 #endif

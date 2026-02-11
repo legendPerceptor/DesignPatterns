@@ -288,3 +288,161 @@ void ProxyExample () {
 
     std::cout << "\nExiting scope, ptr1 destroyed:\n";
 }
+
+void ChainOfResponsibilityExample () {
+    std::cout << "\n--- Chain of Responsibility Pattern Example ---\n";
+    std::cout
+    << "Creating support chain: Level 1 -> Level 2 -> Manager -> Director\n\n";
+
+    // Create the chain of responsibility
+    auto level1   = std::make_shared<ChainOfResponsibility::Level1Support> ();
+    auto level2   = std::make_shared<ChainOfResponsibility::Level2Support> ();
+    auto manager  = std::make_shared<ChainOfResponsibility::Manager> ();
+    auto director = std::make_shared<ChainOfResponsibility::Director> ();
+
+    // Build the chain: Level1 -> Level2 -> Manager -> Director
+    level1->setNext (level2);
+    level2->setNext (manager);
+    manager->setNext (director);
+
+    // Test various tickets with different complexity levels
+    std::cout << "Test 1: Basic issue (handled by Level 1)\n";
+    ChainOfResponsibility::SupportTicket basic (
+    "Password reset needed", ChainOfResponsibility::SupportTicket::Level::Basic);
+    level1->handleTicket (basic);
+
+    std::cout << "\nTest 2: Intermediate issue (escalates to Level 2)\n";
+    ChainOfResponsibility::SupportTicket intermediate (
+    "Software installation failure", ChainOfResponsibility::SupportTicket::Level::Intermediate);
+    level1->handleTicket (intermediate);
+
+    std::cout << "\nTest 3: Advanced issue (escalates to Manager)\n";
+    ChainOfResponsibility::SupportTicket advanced (
+    "System architecture decision needed",
+    ChainOfResponsibility::SupportTicket::Level::Advanced);
+    level1->handleTicket (advanced);
+
+    std::cout
+    << "\nTest 4: Critical issue (escalates all the way to Director)\n";
+    ChainOfResponsibility::SupportTicket critical (
+    "Major security breach - company-wide response needed",
+    ChainOfResponsibility::SupportTicket::Level::Critical);
+    level1->handleTicket (critical);
+}
+
+void CommandExample () {
+    std::cout << "\n--- Command Pattern Example ---\n";
+    std::cout << "Setting up remote control with devices:\n";
+
+    // Create receivers (devices)
+    auto livingRoomLight = std::make_shared<Command::Light> ();
+    auto kitchenLight    = std::make_shared<Command::Light> ();
+    auto stereo          = std::make_shared<Command::Stereo> ();
+    auto ceilingFan      = std::make_shared<Command::CeilingFan> ();
+
+    // Create commands for each device
+    auto livingRoomLightOn = std::make_shared<Command::LightOnCommand> (livingRoomLight);
+    auto livingRoomLightOff = std::make_shared<Command::LightOffCommand> (livingRoomLight);
+
+    auto kitchenLightOn = std::make_shared<Command::LightOnCommand> (kitchenLight);
+    auto kitchenLightOff = std::make_shared<Command::LightOffCommand> (kitchenLight);
+
+    auto stereoOnWithCD = std::make_shared<Command::StereoOnWithCDCommand> (stereo);
+    auto stereoOff = std::make_shared<Command::StereoOffCommand> (stereo);
+
+    auto fanHigh = std::make_shared<Command::CeilingFanHighCommand> (ceilingFan);
+    auto fanOff = std::make_shared<Command::CeilingFanOffCommand> (ceilingFan);
+
+    // Create macro command for party mode
+    std::vector<std::shared_ptr<Command::Command>> partyCommands;
+    partyCommands.push_back (livingRoomLightOn);
+    partyCommands.push_back (stereoOnWithCD);
+    partyCommands.push_back (fanHigh);
+    auto partyMode = std::make_shared<Command::MacroCommand> (partyCommands);
+
+    // Set up remote control
+    Command::RemoteControl remote;
+
+    // Slot 0: Living Room Light
+    remote.setCommand (0, livingRoomLightOn, livingRoomLightOff);
+
+    // Slot 1: Kitchen Light
+    remote.setCommand (1, kitchenLightOn, kitchenLightOff);
+
+    // Slot 2: Stereo
+    remote.setCommand (2, stereoOnWithCD, stereoOff);
+
+    // Slot 3: Ceiling Fan
+    remote.setCommand (3, fanHigh, fanOff);
+
+    // Slot 4: Party Mode (Macro Command)
+    remote.setCommand (4, partyMode,
+    std::make_shared<Command::NoCommand> ()); // No off command for party mode
+
+    // Test the remote
+    std::cout << "\n--- Testing Remote Control ---\n";
+    remote.onButtonWasPressed (0);  // Turn on living room light
+    remote.offButtonWasPressed (0); // Turn off living room light
+
+    std::cout << "\n--- Testing Party Mode ---\n";
+    remote.onButtonWasPressed (4); // Activate party mode
+    std::cout << "\n--- Testing Undo ---\n";
+    remote.undoButtonWasPressed (); // Undo party mode
+
+    std::cout << "\n--- Testing Fan Speed Change with Undo ---\n";
+    remote.onButtonWasPressed (3);  // Fan to HIGH
+    remote.offButtonWasPressed (3); // Fan to OFF
+    std::cout << "\nUndoing fan OFF:\n";
+    remote.undoButtonWasPressed (); // Should go back to HIGH
+}
+
+void IteratorExample () {
+    std::cout << "\n--- Iterator Pattern Example ---\n";
+
+    // Example 1: Music Playlist
+    std::cout
+    << "\n1. Music Playlist Example (forward and backward traversal):\n\n";
+
+    Iterator::Playlist<Iterator::Song> myPlaylist;
+    myPlaylist.add (Iterator::Song ("Bohemian Rhapsody", "Queen"));
+    myPlaylist.add (Iterator::Song ("Stairway to Heaven", "Led Zeppelin"));
+    myPlaylist.add (Iterator::Song ("Hotel California", "Eagles"));
+    myPlaylist.add (Iterator::Song ("Sweet Child O Mine", "Guns N' Roses"));
+
+    std::cout << "Playing songs forward:\n";
+    auto forwardIterator = myPlaylist.createIterator ();
+    while (forwardIterator->hasNext ()) {
+        auto song = forwardIterator->next ();
+        std::cout << "  Now playing: " << song.toString () << "\n";
+    }
+
+    std::cout << "\nPlaying songs in reverse:\n";
+    auto reverseIterator = myPlaylist.createReverseIterator ();
+    while (reverseIterator->hasNext ()) {
+        auto song = reverseIterator->next ();
+        std::cout << "  Now playing: " << song.toString () << "\n";
+    }
+
+    // Example 2: Restaurant Menus
+    std::cout << "\n2. Restaurant Menus Example (uniform traversal of "
+                 "different menus):\n\n";
+
+    Iterator::PancakeHouseMenu pancakeMenu;
+    Iterator::DinerMenu dinerMenu;
+
+    std::cout << "--- Pancake House Menu ---\n";
+    auto pancakeIterator = pancakeMenu.createIterator ();
+    while (pancakeIterator->hasNext ()) {
+        auto item = pancakeIterator->next ();
+        std::cout << "  " << item->getName () << " -- $" << item->getPrice () << "\n";
+        std::cout << "    " << item->getDescription () << "\n";
+    }
+
+    std::cout << "\n--- Diner Menu ---\n";
+    auto dinerIterator = dinerMenu.createIterator ();
+    while (dinerIterator->hasNext ()) {
+        auto item = dinerIterator->next ();
+        std::cout << "  " << item->getName () << " -- $" << item->getPrice () << "\n";
+        std::cout << "    " << item->getDescription () << "\n";
+    }
+}

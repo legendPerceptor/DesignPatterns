@@ -32,5 +32,11 @@ int main () {
     FlyweightExample ();
     simple_log ("Proxy");
     ProxyExample ();
+    simple_log ("Chain of Responsibility");
+    ChainOfResponsibilityExample ();
+    simple_log ("Command");
+    CommandExample ();
+    simple_log ("Iterator");
+    IteratorExample ();
     return 0;
 }
