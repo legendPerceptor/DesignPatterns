@@ -1,0 +1,6 @@
+{
+  "cmake.sourceDirectory": "${workspaceFolder}",
+  "cmake.configureOnOpen": false,
+  "cmake.generator": "Ninja",
+  "cmake.useCMakePresets": "always"
+}
