@@ -10,6 +10,9 @@
 #include "B2Bridge.h"
 #include "B3Composite.h"
 #include "B4Decorator.h"
+#include "B5Facade.h"
+#include "B6Flyweight.h"
+#include "B7Proxy.h"
 
 void FactoryMethodExample (bool useSpreadSheet = false);
 void AbstractFactoryExample (bool isWindows = false);
@@ -20,5 +23,8 @@ void AdapterExample ();
 void BridgeExample ();
 void CompositeExample ();
 void DecoratorExample ();
+void FacadeExample ();
+void FlyweightExample ();
+void ProxyExample ();
 
 #endif

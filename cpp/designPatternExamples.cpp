@@ -187,3 +187,104 @@ void DecoratorExample () {
     beverage3 = std::make_unique<Decorator::Whip> (std::move (beverage3));
     std::cout << "  " << beverage3->getDescription () << " $" << beverage3->cost () << "\n";
 }
+
+void FacadeExample () {
+    std::cout << "\n--- Facade Pattern Example ---\n";
+    std::cout << "Setting up Home Theater with Facade:\n";
+
+    // Create all the subsystem components
+    auto amp       = std::make_shared<Facade::Amplifier> ();
+    auto tuner     = std::make_shared<Facade::Tuner> ();
+    auto dvd       = std::make_shared<Facade::DvdPlayer> ();
+    auto cd        = std::make_shared<Facade::CdPlayer> ();
+    auto projector = std::make_shared<Facade::Projector> ();
+    auto lights    = std::make_shared<Facade::TheaterLights> ();
+    auto screen    = std::make_shared<Facade::Screen> ();
+    auto popper    = std::make_shared<Facade::PopcornPopper> ();
+
+    // Create the facade with all components
+    Facade::HomeTheaterFacade homeTheater (
+    amp, tuner, dvd, cd, projector, lights, screen, popper);
+
+    // Use the simplified interface
+    homeTheater.watchMovie ("Inception");
+    homeTheater.endMovie ();
+    std::cout << "\n";
+    homeTheater.listenToRadio (101.5);
+    homeTheater.endRadio ();
+}
+
+void FlyweightExample () {
+    std::cout << "\n--- Flyweight Pattern Example ---\n";
+    std::cout << "1. Text Editor Example:\n";
+
+    auto factory = std::make_shared<Flyweight::CharacterFactory> ();
+    Flyweight::Document document (factory);
+
+    // Add the same character multiple times with different styles
+    // Only 3 flyweights are created despite many characters
+    document.addCharacter ('H', 12, "black");
+    document.addCharacter ('e', 12, "black");
+    document.addCharacter ('l', 12, "black");
+    document.addCharacter ('l', 12, "black");
+    document.addCharacter ('o', 12, "black");
+    document.addSpace (12);
+    document.addCharacter ('W', 14, "blue");
+    document.addCharacter ('o', 14, "blue");
+    document.addCharacter ('r', 14, "blue");
+    document.addCharacter ('l', 14, "blue");
+    document.addCharacter ('d', 14, "blue");
+    document.addSpace (14);
+
+    document.render ();
+
+    std::cout << "\n2. Forest Example:\n";
+    Flyweight::Forest forest;
+
+    // Plant many trees, but only 3 TreeType objects are created
+    forest.plantTree (10, 20, "Oak", "Green", "Rough");
+    forest.plantTree (30, 40, "Oak", "Green", "Rough"); // Reuses Oak TreeType
+    forest.plantTree (50, 60, "Pine", "Dark Green", "Needles");
+    forest.plantTree (70, 80, "Pine", "Dark Green", "Needles"); // Reuses Pine TreeType
+    forest.plantTree (90, 100, "Birch", "White", "Smooth");
+
+    forest.draw ();
+}
+
+void ProxyExample () {
+    std::cout << "\n--- Proxy Pattern Example ---\n";
+    std::cout << "1. Virtual Proxy (Lazy Loading):\n\n";
+
+    // Create proxy without loading the actual image
+    std::shared_ptr<Proxy::Image> image1 = std::make_shared<Proxy::ProxyImage> ("photo.jpg");
+    std::shared_ptr<Proxy::Image> image2 = std::make_shared<Proxy::ProxyImage> ("photo.jpg");
+
+    std::cout << "First display - image will be loaded:\n";
+    image1->display ();
+
+    std::cout << "\nSecond display - image already loaded:\n";
+    image1->display ();
+
+    std::cout << "\n2. Protection Proxy (Access Control):\n\n";
+    Proxy::ProxyInternet internet;
+
+    std::cout << "Trying to connect to allowed site:\n";
+    internet.connectTo ("google.com");
+
+    std::cout << "\nTrying to connect to blocked site:\n";
+    internet.connectTo ("blocked.com");
+
+    std::cout << "\n3. Smart Reference (Reference Counting):\n\n";
+    {
+        Proxy::SmartPtr<Proxy::Resource> ptr1 (new Proxy::Resource ());
+        ptr1->doSomething ();
+
+        std::cout << "\nCreating copy:\n";
+        Proxy::SmartPtr<Proxy::Resource> ptr2 = ptr1;
+        ptr2->doSomething ();
+
+        std::cout << "\nExiting scope, ptr2 destroyed:\n";
+    }
+
+    std::cout << "\nExiting scope, ptr1 destroyed:\n";
+}

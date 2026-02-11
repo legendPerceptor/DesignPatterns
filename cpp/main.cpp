@@ -26,5 +26,11 @@ int main () {
     CompositeExample ();
     simple_log ("Decorator");
     DecoratorExample ();
+    simple_log ("Facade");
+    FacadeExample ();
+    simple_log ("Flyweight");
+    FlyweightExample ();
+    simple_log ("Proxy");
+    ProxyExample ();
     return 0;
 }
