@@ -20,14 +20,63 @@ In this way, you can easily remember all the 23 design patterns and recite it in
 
 ## Self-explained examples
 
-The best way to understand each design pattern is to implement them to do some tasks. I hope to build similar design pattern examples in multiple languages (including C++, Go, Python, Rust, etc.) Currently, I focus mainly on C++ implementations. The code lives in ./cpp folder. You can build and run the C++ demo using the following commands.
+The best way to understand each design pattern is to implement them to do some tasks. I hope to build similar design pattern examples in multiple languages (including C++, Go, Python, Rust, etc.) Currently, I focus mainly on C++ implementations. The code lives in ./cpp folder.
+
+### Building with CMake Presets (Recommended for VS Code)
+
+The project uses CMake Presets for configuration. You can build using the presets:
 
 ```bash
-mkdir -p cpp/build
-cd cpp/build
+# Configure and build in Debug mode
+cmake --preset debug
+cmake --build --preset debug
+
+# Configure and build in Release mode
+cmake --preset release
+cmake --build --preset release
+
+# Run the demo
+./build/debug/cpp/src/DesignPatternDemo
+
+# Run the unit tests
+./build/debug/cpp/tests/AllTests
+```
+
+### Building with CMake (Command Line)
+
+Alternatively, you can use traditional CMake commands:
+
+```bash
+# From the project root
+mkdir -p build
+cd build
 cmake ..
 cmake --build .
-./DesignPatternDemo
+```
+
+### Building with VS Code
+
+If you're using VS Code with the CMake Tools extension:
+
+1. Open the project in VS Code
+2. The CMake Tools extension will detect the CMakePresets.json
+3. Select a preset (Debug or Release) from the status bar
+4. Click "Build" in the status bar or use `Ctrl+Shift+B` / `Cmd+Shift+B`
+
+### Running Tests
+
+The project includes unit tests using Google Test:
+
+```bash
+# Run all tests
+cd build/debug/cpp/tests/
+ctest --output-on-failure
+
+# Or run specific test executables
+./AllTests              # Run all tests
+./CreationalTests      # Run only creational pattern tests
+./StructuralTests      # Run only structural pattern tests
+./BehavioralTests      # Run only behavioral pattern tests
 ```
 
 ## Pre-commit
