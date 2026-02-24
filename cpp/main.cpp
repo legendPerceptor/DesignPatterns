@@ -32,11 +32,27 @@ int main () {
     FlyweightExample ();
     simple_log ("Proxy");
     ProxyExample ();
+    simple_log ("Interpreter");
+    InterpreterExample ();
+    simple_log ("Template Method");
+    TemplateMethodExample ();
     simple_log ("Chain of Responsibility");
     ChainOfResponsibilityExample ();
     simple_log ("Command");
     CommandExample ();
     simple_log ("Iterator");
     IteratorExample ();
+    simple_log ("Mediator");
+    MediatorExample ();
+    simple_log ("Memento");
+    MementoExample ();
+    simple_log ("Observer");
+    ObserverExample ();
+    simple_log ("State");
+    StateExample ();
+    simple_log ("Strategy");
+    StrategyExample ();
+    simple_log ("Visitor");
+    VisitorExample ();
     return 0;
 }

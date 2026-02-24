@@ -446,3 +446,437 @@ void IteratorExample () {
         std::cout << "    " << item->getDescription () << "\n";
     }
 }
+
+void InterpreterExample () {
+    std::cout << "\n--- Interpreter Pattern Example ---\n";
+    std::cout << "\n1. Mathematical Expression Interpreter:\n\n";
+
+    Interpreter::Context context;
+
+    // Example: Evaluate "5 + 3 - 2"
+    std::cout << "Expression: 5 + 3 - 2\n";
+    auto expr1 = std::make_shared<Interpreter::AddExpression> (
+    std::make_shared<Interpreter::NumberExpression> (5),
+    std::make_shared<Interpreter::NumberExpression> (3));
+    auto expr2 = std::make_shared<Interpreter::SubtractExpression> (
+    expr1, std::make_shared<Interpreter::NumberExpression> (2));
+    std::cout << "Result: " << expr2->interpret (context) << "\n\n";
+
+    // Example: Evaluate "10 * 2 / 5"
+    std::cout << "Expression: 10 * 2 / 5\n";
+    auto expr3 = std::make_shared<Interpreter::MultiplyExpression> (
+    std::make_shared<Interpreter::NumberExpression> (10),
+    std::make_shared<Interpreter::NumberExpression> (2));
+    auto expr4 = std::make_shared<Interpreter::DivideExpression> (
+    expr3, std::make_shared<Interpreter::NumberExpression> (5));
+    std::cout << "Result: " << expr4->interpret (context) << "\n\n";
+
+    // Example with variables
+    std::cout << "\n2. Expression with Variables:\n";
+    context.setVariable ("x", 10);
+    context.setVariable ("y", 5);
+    std::cout << "Expression: x * y - 15 (where x=10, y=5)\n";
+    auto varX  = std::make_shared<Interpreter::VariableExpression> ("x");
+    auto varY  = std::make_shared<Interpreter::VariableExpression> ("y");
+    auto expr5 = std::make_shared<Interpreter::MultiplyExpression> (varX, varY);
+    auto expr6 = std::make_shared<Interpreter::SubtractExpression> (
+    expr5, std::make_shared<Interpreter::NumberExpression> (15));
+    std::cout << "Result: " << expr6->interpret (context) << "\n\n";
+
+    // Example 3: Boolean expressions
+    std::cout << "\n3. Boolean Expression Interpreter:\n\n";
+    context.setVariable ("is_raining", 1);
+    context.setVariable ("has_umbrella", 1);
+
+    auto raining   = std::make_shared<Interpreter::Variable> ("is_raining");
+    auto umbrella  = std::make_shared<Interpreter::Variable> ("has_umbrella");
+    auto goOutside = std::make_shared<Interpreter::Or> (
+    raining, std::make_shared<Interpreter::Not> (umbrella));
+
+    std::cout << "Expression: is_raining AND NOT has_umbrella\n";
+    std::cout << "  (Should we stay inside?)\n";
+    bool stayInside = std::make_shared<Interpreter::And> (
+    raining, std::make_shared<Interpreter::Not> (umbrella))
+                      ->evaluate (context);
+    std::cout << "Result: " << (stayInside ? "true (stay inside)" : "false (go outside)")
+              << "\n\n";
+}
+
+void TemplateMethodExample () {
+    std::cout << "\n--- Template Method Pattern Example ---\n";
+
+    // Example 1: Data Processing
+    std::cout << "\n1. Data Processing Example:\n\n";
+
+    TemplateMethod::TextTransformationProcessor textProcessor;
+    std::cout << "\n--- Processing Text Data ---\n";
+    textProcessor.processData ("Hello Design Patterns!");
+
+    std::cout << "\n--- Processing Number Data ---\n";
+    TemplateMethod::NumberCalculationProcessor numberProcessor;
+    numberProcessor.processData ("10, 20, 30, 40, 50");
+
+    // Example 2: Caffeine Beverages
+    std::cout << "\n2. Caffeine Beverage Example:\n\n";
+
+    std::cout << "--- Making Coffee ---\n";
+    TemplateMethod::Coffee coffee;
+    coffee.prepareRecipe ();
+
+    std::cout << "\n--- Making Tea ---\n";
+    TemplateMethod::Tea tea;
+    tea.prepareRecipe ();
+
+    // Example 3: Game AI
+    std::cout << "\n3. Game AI Example:\n\n";
+
+    std::cout << "--- Aggressive AI Turn ---\n";
+    TemplateMethod::AggressiveAI aggressiveAI;
+    aggressiveAI.takeTurn ();
+
+    std::cout << "\n--- Defensive AI Turn ---\n";
+    TemplateMethod::DefensiveAI defensiveAI;
+    defensiveAI.takeTurn ();
+}
+
+void MediatorExample () {
+    std::cout << "\n--- Mediator Pattern Example ---\n";
+    std::cout << "Air Traffic Control System\n";
+
+    auto controlTower = std::make_shared<Mediator::ControlTower> ();
+
+    // Register aircraft
+    auto plane1 = std::make_shared<Mediator::Aircraft> ("Flight 101", controlTower);
+    auto plane2 = std::make_shared<Mediator::Aircraft> ("Flight 202", controlTower);
+    auto plane3 = std::make_shared<Mediator::Aircraft> ("Flight 303", controlTower);
+
+    controlTower->registerAircraft (plane1);
+    controlTower->registerAircraft (plane2);
+    controlTower->registerAircraft (plane3);
+
+    std::cout << "\n--- Scenario 1: Plane 1 takes off ---\n";
+    plane1->takeoff ();
+
+    std::cout << "\n--- Scenario 2: Plane 2 requests landing ---\n";
+    plane2->land ();
+
+    std::cout
+    << "\n--- Scenario 3: Plane 3 tries to take off while runway busy ---\n";
+    plane3->takeoff ();
+
+    std::cout << "\n--- Scenario 4: Plane 1 lands ---\n";
+    plane1->land ();
+
+    std::cout << "\n--- Scenario 5: Broadcasting message ---\n";
+    plane1->sendMessage ("Weather alert: Storm approaching");
+}
+
+void MementoExample () {
+    std::cout << "\n--- Memento Pattern Example ---\n";
+
+    // Example 1: Text Editor
+    std::cout << "\n1. Text Editor with Undo/Redo:\n\n";
+
+    Memento::TextDocument doc;
+    Memento::History history;
+
+    // Initial state
+    history.setInitialState (doc.save ());
+
+    std::cout << "--- Writing text ---\n";
+    doc.write ("Hello");
+    history.saveState (doc.save ());
+
+    doc.write (" World");
+    history.saveState (doc.save ());
+
+    doc.write ("!");
+    history.saveState (doc.save ());
+
+    std::cout << "\n--- Performing Undo ---\n";
+    doc.restore (history.undo ());
+
+    std::cout << "\n--- Performing Another Undo ---\n";
+    doc.restore (history.undo ());
+
+    std::cout << "\n--- Performing Redo ---\n";
+    doc.restore (history.redo ());
+
+    // Example 2: Game Character
+    std::cout << "\n\n2. Game Character Checkpoints:\n\n";
+
+    Memento::GameCharacter hero ("Hero");
+
+    std::cout << "--- Initial state ---\n";
+    std::cout << "Health: 100, Position: (0, 0)\n";
+
+    std::cout << "\n--- Creating checkpoint 1 ---\n";
+    auto checkpoint1 = hero.createCheckpoint ();
+
+    std::cout << "\n--- Taking damage and moving ---\n";
+    hero.takeDamage (30);
+    hero.move (10, 5);
+
+    std::cout << "\n--- Creating checkpoint 2 ---\n";
+    auto checkpoint2 = hero.createCheckpoint ();
+
+    std::cout << "\n--- More damage and movement ---\n";
+    hero.takeDamage (50);
+    hero.move (20, 10);
+
+    std::cout << "\n--- Restoring to checkpoint 2 ---\n";
+    hero.restoreFromCheckpoint (checkpoint2);
+
+    std::cout << "\n--- Restoring to checkpoint 1 ---\n";
+    hero.restoreFromCheckpoint (checkpoint1);
+}
+
+void ObserverExample () {
+    std::cout << "\n--- Observer Pattern Example ---\n";
+
+    // Example 1: Weather Station
+    std::cout << "\n1. Weather Station:\n\n";
+
+    Observer::WeatherStation weatherStation;
+
+    auto phone1          = std::make_shared<Observer::PhoneDisplay> ("Alice");
+    auto phone2          = std::make_shared<Observer::PhoneDisplay> ("Bob");
+    auto webDisplay      = std::make_shared<Observer::WebDisplay> ();
+    auto forecastDisplay = std::make_shared<Observer::ForecastDisplay> ();
+
+    std::cout << "--- Attaching observers ---\n";
+    weatherStation.attach (phone1);
+    weatherStation.attach (phone2);
+    weatherStation.attach (webDisplay);
+    weatherStation.attach (forecastDisplay);
+
+    std::cout << "\n--- First weather update ---\n";
+    weatherStation.setMeasurements (25.5, 65.0, 1013.0);
+
+    std::cout << "\n--- Second weather update ---\n";
+    weatherStation.setMeasurements (28.0, 70.0, 1008.0);
+
+    std::cout << "\n--- Detaching Bob's phone ---\n";
+    weatherStation.detach (phone2);
+
+    std::cout << "\n--- Third weather update ---\n";
+    weatherStation.setMeasurements (22.0, 55.0, 1020.0);
+
+    // Example 2: YouTube Channel
+    std::cout << "\n\n2. YouTube Channel:\n\n";
+
+    Observer::YouTubeChannel myChannel ("Code Academy");
+
+    auto sub1 = std::make_shared<Observer::Subscriber> ("Alice");
+    auto sub2 = std::make_shared<Observer::Subscriber> ("Bob");
+    auto sub3 = std::make_shared<Observer::Subscriber> ("Charlie");
+
+    std::cout << "--- Subscribing to channel ---\n";
+    myChannel.attach (sub1);
+    myChannel.attach (sub2);
+    myChannel.attach (sub3);
+
+    std::cout << "\n--- Uploading new video ---\n";
+    myChannel.uploadVideo ("Design Patterns in C++");
+}
+
+void StateExample () {
+    std::cout << "\n--- State Pattern Example ---\n";
+
+    // Example 1: Vending Machine
+    std::cout << "\n1. Vending Machine:\n\n";
+
+    State::VendingMachine vendingMachine (3);
+
+    std::cout << "--- Initial state ---\n";
+    std::cout << "State: " << vendingMachine.getStateName () << "\n";
+    std::cout << "Items: " << vendingMachine.getItemCount () << "\n";
+
+    std::cout << "\n--- Try to press button without coin ---\n";
+    vendingMachine.pressButton ();
+
+    std::cout << "\n--- Insert coin ---\n";
+    vendingMachine.insertCoin ();
+
+    std::cout << "\n--- Press button ---\n";
+    vendingMachine.pressButton ();
+
+    std::cout << "\n--- Insert coin and buy again ---\n";
+    vendingMachine.insertCoin ();
+    vendingMachine.pressButton ();
+
+    std::cout << "\n--- Insert coin and buy again (last item) ---\n";
+    vendingMachine.insertCoin ();
+    vendingMachine.pressButton ();
+
+    std::cout << "\n--- Try to insert coin when out of stock ---\n";
+    vendingMachine.insertCoin ();
+
+    // Example 2: Document Workflow
+    std::cout << "\n\n2. Document Workflow:\n\n";
+
+    State::Document document;
+
+    std::cout << "--- Editing in draft ---\n";
+    document.edit ("Initial content");
+
+    std::cout << "\n--- Submit for moderation ---\n";
+    document.publish ();
+
+    std::cout << "\n--- Try to edit during moderation ---\n";
+    document.edit ("Trying to edit");
+
+    std::cout << "\n--- Reject document ---\n";
+    document.reject ();
+
+    std::cout << "\n--- Edit and submit again ---\n";
+    document.edit ("Revised content");
+    document.publish ();
+
+    std::cout << "\n--- Approve document ---\n";
+    document.publish ();
+
+    std::cout << "\n--- Try to edit published document ---\n";
+    document.edit ("New changes");
+
+    // Example 3: Order Processing
+    std::cout << "\n\n3. Order Processing:\n\n";
+
+    State::Order order ("ORD-12345");
+
+    std::cout << "--- Process order ---\n";
+    order.process ();
+
+    std::cout << "\n--- Ship order ---\n";
+    order.ship ();
+
+    std::cout << "\n--- Deliver order ---\n";
+    order.deliver ();
+
+    std::cout << "\n--- Try to cancel delivered order ---\n";
+    order.cancel ();
+
+    std::cout << "\n\n--- New order cancellation ---\n";
+    State::Order order2 ("ORD-67890");
+    order2.cancel ();
+}
+
+void StrategyExample () {
+    std::cout << "\n--- Strategy Pattern Example ---\n";
+
+    // Example 1: Payment Processing
+    std::cout << "\n1. Payment Processing:\n\n";
+
+    Strategy::ShoppingCart cart;
+
+    std::cout << "--- Paying with Credit Card ---\n";
+    cart.setPaymentStrategy (std::make_shared<Strategy::CreditCardPayment> (
+    "4111-1111-1111-1111", "John Doe"));
+    cart.checkout (99.99);
+
+    std::cout << "\n--- Paying with PayPal ---\n";
+    cart.setPaymentStrategy (
+    std::make_shared<Strategy::PayPalPayment> ("john.doe@email.com"));
+    cart.checkout (49.99);
+
+    std::cout << "\n--- Paying with Apple Pay ---\n";
+    cart.setPaymentStrategy (
+    std::make_shared<Strategy::ApplePayPayment> ("device-id-12345"));
+    cart.checkout (29.99);
+
+    std::cout << "\n--- Paying with Crypto ---\n";
+    cart.setPaymentStrategy (
+    std::make_shared<Strategy::CryptoPayment> ("0x1234...abcd"));
+    cart.checkout (199.99);
+
+    // Example 2: File Compression
+    std::cout << "\n\n2. File Compression:\n\n";
+
+    Strategy::FileCompressor compressor;
+
+    compressor.setCompressionStrategy (std::make_shared<Strategy::ZipCompression> ());
+    compressor.compressFile ("document.txt");
+
+    compressor.setCompressionStrategy (std::make_shared<Strategy::RarCompression> ());
+    compressor.compressFile ("photos.zip");
+
+    compressor.setCompressionStrategy (std::make_shared<Strategy::SevenZipCompression> ());
+    compressor.compressFile ("backup");
+
+    // Example 3: Navigation
+    std::cout << "\n\n3. Navigation System:\n\n";
+
+    Strategy::Location start ("Home", 40.7128, -74.0060);
+    Strategy::Location end ("Work", 40.7589, -73.9851);
+
+    Strategy::NavigationSystem nav ("User");
+
+    nav.setRouteStrategy (std::make_shared<Strategy::FastestRouteStrategy> ());
+    nav.navigate (start, end);
+
+    nav.setRouteStrategy (std::make_shared<Strategy::ShortestRouteStrategy> ());
+    nav.navigate (start, end);
+
+    nav.setRouteStrategy (std::make_shared<Strategy::AvoidHighwaysStrategy> ());
+    nav.navigate (start, end);
+
+    nav.setRouteStrategy (std::make_shared<Strategy::EcoFriendlyRouteStrategy> ());
+    nav.navigate (start, end);
+}
+
+void VisitorExample () {
+    std::cout << "\n--- Visitor Pattern Example ---\n";
+
+    // Example 1: Shopping Cart with Different Visitors
+    std::cout << "\n1. Shopping Cart with Multiple Visitors:\n\n";
+
+    Visitor::ShoppingCart cart;
+
+    // Add items to cart
+    cart.addItem (std::make_shared<Visitor::Book> ("Design Patterns", "Erich Gamma", 49.99));
+    cart.addItem (std::make_shared<Visitor::Book> ("Clean Code", "Robert Martin", 39.99));
+    cart.addItem (std::make_shared<Visitor::Fruit> ("Apple", 2.99, 1.5));
+    cart.addItem (std::make_shared<Visitor::Fruit> ("Banana", 1.99, 2.0));
+    cart.addItem (std::make_shared<Visitor::Electronics> ("iPhone 15", 999.99, true));
+    cart.addItem (std::make_shared<Visitor::Electronics> ("Laptop", 1299.99, true));
+
+    // Apply different visitors
+    std::cout << "\n=== Calculating Taxes ===\n";
+    Visitor::TaxVisitor taxVisitor;
+    cart.accept (taxVisitor);
+
+    std::cout << "\n=== Applying Discounts ===\n";
+    Visitor::DiscountVisitor discountVisitor;
+    cart.accept (discountVisitor);
+
+    std::cout << "\n=== Counting Inventory ===\n";
+    Visitor::InventoryVisitor inventoryVisitor;
+    cart.accept (inventoryVisitor);
+    inventoryVisitor.printSummary ();
+
+    // Example 2: File System Visitor
+    std::cout << "\n\n2. File System Visitor:\n\n";
+
+    // Create file system structure
+    auto readme = std::make_shared<Visitor::File> ("README.md", 1024);
+    auto main   = std::make_shared<Visitor::File> ("main.cpp", 4096);
+    auto utils  = std::make_shared<Visitor::File> ("utils.cpp", 2048);
+
+    auto srcDir = std::make_shared<Visitor::Directory> ("src");
+    srcDir->addNode (main);
+    srcDir->addNode (utils);
+
+    auto rootDir = std::make_shared<Visitor::Directory> ("project");
+    rootDir->addNode (readme);
+    rootDir->addNode (srcDir);
+
+    std::cout << "--- Calculating Sizes ---\n";
+    Visitor::SizeCalculatorVisitor sizeCalc;
+    rootDir->accept (sizeCalc);
+    std::cout << "\nTotal directory size: " << sizeCalc.getTotalSize () << " bytes\n";
+
+    std::cout << "\n--- Exporting to XML ---\n";
+    Visitor::XmlExporterVisitor xmlExporter;
+    rootDir->accept (xmlExporter);
+    std::cout << xmlExporter.getXmlOutput () << "</filesystem>\n";
+}

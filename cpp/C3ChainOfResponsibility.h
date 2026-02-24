@@ -11,8 +11,8 @@ Key participants:
 Real-world example: A technical support ticket system where tickets are escalated
 through different levels (Level 1 support -> Level 2 -> Manager -> Director).
 */
-#ifndef C1_CHAIN_OF_RESPONSIBILITY_H
-#define C1_CHAIN_OF_RESPONSIBILITY_H
+#ifndef C3_CHAIN_OF_RESPONSIBILITY_H
+#define C3_CHAIN_OF_RESPONSIBILITY_H
 
 #include <iostream>
 #include <memory>
