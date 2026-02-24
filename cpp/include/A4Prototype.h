@@ -49,6 +49,10 @@ class Circle : public Shape {
         color_ = c;
     }
 
+    double getRadius () {
+        return radius_;
+    }
+
     private:
     double radius_     = 1.0;
     std::string color_ = "black";
