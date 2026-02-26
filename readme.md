@@ -1,4 +1,4 @@
-# Design patterns
+# Design Patterns
 
 This repo aims to explain all the 23 design patterns in a systematic way, and provide concrete examples to use each of them. The goal is to help you build a system of these design patterns. Whenever you were given questions related to a design pattern, you could be confident to answer and explain it.
 
@@ -18,66 +18,32 @@ Finally, there are (22) Strategy and (23) Vistor. They are often used together s
 
 In this way, you can easily remember all the 23 design patterns and recite it in whatever order. Next, we will start trying to understand what they actully do.
 
-## Self-explained examples
+## Implementations
 
-The best way to understand each design pattern is to implement them to do some tasks. I hope to build similar design pattern examples in multiple languages (including C++, Go, Python, Rust, etc.) Currently, I focus mainly on C++ implementations. The code lives in ./cpp folder.
+The best way to understand each design pattern is to implement them to do some tasks. This project provides implementations in multiple languages with practical examples and comprehensive unit tests.
 
-### Building with CMake Presets (Recommended for VS Code)
+### [C++ Implementation](./cpp/README.md)
 
-The project uses CMake Presets for configuration. You can build using the presets:
+Modern C++ implementation with smart pointers, RAII, and templates. Most patterns are header-only.
 
-```bash
-# Configure and build in Debug mode
-cmake --preset debug
-cmake --build --preset debug
+- **Build**: `cmake --preset debug && cmake --build --preset debug`
+- **Run Tests**: `./build/debug/cpp/tests/AllTests`
+- **File Naming**: `A1FactoryMethod.h`, `B1Adapter.h`, `C1Interpreter.h` (PascalCase)
 
-# Configure and build in Release mode
-cmake --preset release
-cmake --build --preset release
+### [Python Implementation](./python/README.md)
 
-# Run the demo
-./build/debug/cpp/src/DesignPatternDemo
+Clean Python implementation using ABC, dataclasses, and type hints.
 
-# Run the unit tests
-./build/debug/cpp/tests/AllTests
-```
+- **Run Tests**: `uv run pytest tests/ -v`
+- **File Naming**: `a1_factory_method.py`, `b1_adapter.py`, `c1_interpreter.py` (snake_case)
 
-### Building with CMake (Command Line)
+## Pattern Overview
 
-Alternatively, you can use traditional CMake commands:
-
-```bash
-# From the project root
-mkdir -p build
-cd build
-cmake ..
-cmake --build .
-```
-
-### Building with VS Code
-
-If you're using VS Code with the CMake Tools extension:
-
-1. Open the project in VS Code
-2. The CMake Tools extension will detect the CMakePresets.json
-3. Select a preset (Debug or Release) from the status bar
-4. Click "Build" in the status bar or use `Ctrl+Shift+B` / `Cmd+Shift+B`
-
-### Running Tests
-
-The project includes unit tests using Google Test:
-
-```bash
-# Run all tests
-cd build/debug/cpp/tests/
-ctest --output-on-failure
-
-# Or run specific test executables
-./AllTests              # Run all tests
-./CreationalTests      # Run only creational pattern tests
-./StructuralTests      # Run only structural pattern tests
-./BehavioralTests      # Run only behavioral pattern tests
-```
+| Category | Patterns |
+|----------|----------|
+| **Creational** (A1-A5) | Factory Method, Abstract Factory, Builder, Prototype, Singleton |
+| **Structural** (B1-B7) | Adapter, Bridge, Composite, Decorator, Facade, Flyweight, Proxy |
+| **Behavioral** (C1-C11) | Interpreter, Template Method, Chain of Responsibility, Command, Iterator, Mediator, Memento, Observer, State, Strategy, Visitor |
 
 ## Pre-commit
 

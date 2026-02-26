@@ -1,5 +1,57 @@
+# Visual Studio Code
 .vscode/*
 !.vscode/settings.json
+
+# Build directories
 **/build/
+**/cmake-build-*/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+.env
+.python-version
+
+# Python testing
+.pytest_cache/
+.coverage
+htmlcov/
+*.cover
+.hypothesis/
+
+# Python type checking
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.ruff_cache/
+
+# Logs
 *.log
 **/.cache/
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.cmake
+!CMakeLists.txt
+!CMakePresets.json
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# uv
+uv.lock
