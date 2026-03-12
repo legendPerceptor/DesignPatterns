@@ -1,0 +1,61 @@
+# Rust formatter configuration
+# See https://rust-lang.github.io/rustfmt/
+
+# Maximum line width
+max_width = 100
+
+# Use tab characters for indentation
+hard_tabs = false
+tab_spaces = 4
+
+# Edition
+edition = "2021"
+
+# Merge derives
+merge_derives = true
+
+# Use field init shorthand
+use_field_init_shorthand = true
+
+# Use try shorthand
+use_try_shorthand = true
+
+# Format code in doc comments
+format_code_in_doc_comments = true
+
+# Normalize comments
+normalize_comments = true
+
+# Normalize doc attributes
+normalize_doc_attributes = true
+
+# Reorder imports
+reorder_imports = true
+
+# Reorder modules
+reorder_modules = true
+
+# Sort module level statements
+reorder_impl_items = true
+
+# Use small heuristics
+use_small_heuristics = "Default"
+
+# Wrap comments at max_width
+wrap_comments = true
+comment_width = 100
+
+# Struct variant width
+struct_variant_width = 60
+
+# Empty item single line
+empty_item_single_line = true
+
+# Enum discriminator threshold
+enum_discrim_align_threshold = 200
+
+# Error on line overflow
+error_on_line_overflow = false
+
+# Error on unformatted
+error_on_unformatted = false
