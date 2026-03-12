@@ -34,7 +34,7 @@ impl AdvancedMediaPlayer for Mp4Player {
         println!("Playing MP4 file: {}", filename);
     }
 
-    fn play_vlc(&self, filename: &str) {
+    fn play_vlc(&self, _filename: &str) {
         // Nothing to do
     }
 }
@@ -42,7 +42,7 @@ impl AdvancedMediaPlayer for Mp4Player {
 pub struct VlcPlayer;
 
 impl AdvancedMediaPlayer for VlcPlayer {
-    fn play_mp4(&self, filename: &str) {
+    fn play_mp4(&self, _filename: &str) {
         // Nothing to do
     }
 

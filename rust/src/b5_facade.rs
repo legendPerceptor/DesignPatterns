@@ -308,6 +308,29 @@ impl HomeTheaterFacade {
         self.cd.on();
         self.cd.play(album);
     }
+
+    pub fn listen_to_radio(&mut self, frequency: f64) {
+        println!("\nGet ready to listen to radio at {}...", frequency);
+
+        self.amp.on();
+        self.amp.set_volume(5);
+        self.tuner.on();
+        self.tuner.set_frequency(frequency);
+        self.tuner.set_fm();
+
+        println!("Radio tuned to {}", frequency);
+    }
+
+    pub fn end_radio(&self) {
+        println!("\nShutting down radio...");
+        self.tuner.off();
+        self.amp.off();
+    }
+
+    pub fn turn_off_all_lights(&self) {
+        println!("\nTurning off all lights...");
+        self.lights.off();
+    }
 }
 
 impl DvdPlayer {
@@ -326,9 +349,38 @@ impl Default for HomeTheaterFacade {
 pub fn example() {
     println!("\n--- Facade Pattern Example ---\n");
 
+    println!("=== Demonstrating individual components ===");
+    let mut amp = Amplifier::new();
+    let dvd = DvdPlayer::new();
+    let cd = CdPlayer::new();
+    let mut tuner = Tuner::new();
+
+    println!("\n--- Testing Amplifier ---");
+    amp.on();
+    amp.set_volume(50);
+    amp.off();
+
+    println!("\n--- Testing DVD Player ---");
+    dvd.on();
+    dvd.play("Movie");
+    dvd.off();
+
+    println!("\n--- Testing CD Player ---");
+    cd.on();
+    cd.play("Album");
+    cd.off();
+
+    println!("\n--- Testing Tuner ---");
+    tuner.on();
+    tuner.set_frequency(101.5);
+    tuner.set_fm();
+    tuner.set_am();
+    tuner.off();
+
+    println!("\n=== Using Facade ===");
     let mut facade = HomeTheaterFacade::new();
 
-    println!("1. Watch Movie:");
+    println!("\n1. Watch Movie:");
     facade.watch_movie("The Matrix");
 
     println!("\n2. End Movie:");
@@ -336,6 +388,15 @@ pub fn example() {
 
     println!("\n3. Listen to CD:");
     facade.listen_to_cd("Pink Floyd - Dark Side of the Moon");
+
+    println!("\n4. Listen to Radio:");
+    facade.listen_to_radio(101.5);
+
+    println!("\n5. End Radio:");
+    facade.end_radio();
+
+    println!("\n6. Turn off all lights:");
+    facade.turn_off_all_lights();
 }
 
 #[cfg(test)]

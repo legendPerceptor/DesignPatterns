@@ -193,6 +193,29 @@ pub fn example() {
 
     let result2 = expr2.interpret(&context);
     println!("   Result: {}", result2);
+
+    // Subtraction
+    println!("\n3. Subtraction: (x - y) / z");
+    let expr3 = DivideExpression::new(
+        Box::new(SubtractExpression::new(
+            Box::new(VariableExpression::new("x")),
+            Box::new(VariableExpression::new("y")),
+        )),
+        Box::new(VariableExpression::new("z")),
+    );
+
+    let result3 = expr3.interpret(&context);
+    println!("   Result: {}", result3);
+
+    // Division by zero example
+    println!("\n4. Division by zero: x / 0");
+    let expr4 = DivideExpression::new(
+        Box::new(VariableExpression::new("x")),
+        Box::new(NumberExpression::new(0)),
+    );
+
+    let result4 = expr4.interpret(&context);
+    println!("   Result: {}", result4);
 }
 
 #[cfg(test)]

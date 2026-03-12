@@ -122,10 +122,18 @@ pub fn create_file_system() -> Directory {
 pub fn example() {
     println!("\n--- Composite Pattern Example ---\n");
 
-    let fs = create_file_system();
+    let mut fs = create_file_system();
     fs.display(0);
 
     println!("\nTotal size: {} bytes", fs.size());
+    println!("Child count: {}", fs.child_count());
+    println!("Root name: {}", fs.get_name());
+
+    // Demonstrate remove functionality
+    println!("\nRemoving first item...");
+    fs.remove(0);
+    println!("New child count: {}", fs.child_count());
+    println!("New total size: {} bytes", fs.size());
 }
 
 #[cfg(test)]

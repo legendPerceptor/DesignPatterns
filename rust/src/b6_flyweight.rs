@@ -74,11 +74,10 @@ impl CharacterFactory {
     }
 
     pub fn get_character(&mut self, c: char) -> Rc<dyn Character> {
-        if !self.letters.contains_key(&c) {
+        self.letters.entry(c).or_insert_with(|| {
             println!("Creating new flyweight for '{}'", c);
-            self.letters.insert(c, Rc::new(Letter::new(c)));
-        }
-        self.letters.get(&c).cloned().unwrap()
+            Rc::new(Letter::new(c))
+        }).clone()
     }
 
     pub fn get_space(&mut self) -> Rc<dyn Character> {
@@ -162,7 +161,7 @@ pub fn example() {
 
     println!("1. Document Character Example:");
 
-    let mut factory = CharacterFactory::new();
+    let factory = CharacterFactory::new();
     let mut doc = Document::new(factory);
 
     // Add characters - reusing 'h', 'e', 'l', 'o' multiple times
@@ -193,6 +192,7 @@ mod tests {
 
         // Both should return the same underlying character
         assert_eq!(c1.get_char(), c2.get_char());
+        assert_eq!(c1.get_char(), 'a');
     }
 
     #[test]

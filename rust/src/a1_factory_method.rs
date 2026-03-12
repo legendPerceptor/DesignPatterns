@@ -15,6 +15,7 @@
 //! - Easy to extend for new products
 
 // Product trait
+#[allow(dead_code)]
 pub trait Document {
     fn create(&self);
     fn get_type(&self) -> &str;
@@ -25,10 +26,17 @@ pub struct TextDocument {
     content: String,
 }
 
+#[allow(dead_code)]
 impl TextDocument {
     pub fn new() -> Self {
         Self {
             content: String::new(),
+        }
+    }
+
+    pub fn with_content(content: &str) -> Self {
+        Self {
+            content: content.to_string(),
         }
     }
 }
@@ -36,6 +44,9 @@ impl TextDocument {
 impl Document for TextDocument {
     fn create(&self) {
         println!("TextDocument created");
+        if !self.content.is_empty() {
+            println!("  Content: {}", self.content);
+        }
     }
 
     fn get_type(&self) -> &str {
@@ -81,7 +92,7 @@ pub struct TextEditorApplication;
 
 impl Application for TextEditorApplication {
     fn new_document(&self) -> Box<dyn Document> {
-        Box::new(TextDocument::new())
+        Box::new(TextDocument::with_content("Hello, World!"))
     }
 }
 

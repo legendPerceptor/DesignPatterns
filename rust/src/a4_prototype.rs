@@ -163,6 +163,7 @@ pub fn example() {
 }
 
 // Helper trait for downcasting
+#[allow(dead_code)]
 pub trait AsAny {
     fn as_any(&self) -> &dyn std::any::Any;
 }

@@ -23,11 +23,13 @@ pub trait Device {
 }
 
 // Concrete Implementors
+#[allow(dead_code)]
 pub struct TV {
     name: String,
     state: TVState,
 }
 
+#[allow(dead_code)]
 struct TVState {
     on: bool,
     volume: u8,
@@ -60,11 +62,13 @@ impl Device for TV {
     }
 }
 
+#[allow(dead_code)]
 pub struct Radio {
     name: String,
     state: RadioState,
 }
 
+#[allow(dead_code)]
 struct RadioState {
     on: bool,
     volume: u8,
@@ -133,6 +137,7 @@ impl RemoteControl {
         }
     }
 
+    #[allow(dead_code)]
     pub fn volume_down(&mut self) {
         self.volume = self.volume.saturating_sub(10);
         if let Some(ref device) = self.device {
@@ -202,6 +207,7 @@ pub fn example() {
     let mut adv_remote = AdvancedRemoteControl::new();
     adv_remote.connect(Box::new(Radio::new("98.5 FM")));
     adv_remote.toggle_power();
+    adv_remote.volume_up();
     adv_remote.volume_up();
     adv_remote.mute();
 }

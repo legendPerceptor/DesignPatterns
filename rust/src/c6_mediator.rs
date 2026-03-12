@@ -187,6 +187,23 @@ pub fn example() {
     tower_rc.borrow_mut().register_aircraft(plane3);
     println!("All aircraft registered with control tower.");
 
+    println!("\n--- Testing Aircraft State Methods ---");
+    let mut test_plane = Aircraft::new("Test Flight");
+    test_plane.set_mediator(tower_rc.clone());
+
+    println!("Is flying? {}", test_plane.is_flying());
+    test_plane.set_flying(true);
+    println!("Now flying? {}", test_plane.is_flying());
+    test_plane.set_flying(false);
+
+    println!("\n--- Communication Test ---");
+    test_plane.send_message("Hello, this is Test Flight!");
+
+    println!("\n--- Landing/Takeoff Requests ---");
+    test_plane.set_flying(true);
+    test_plane.land();
+    test_plane.takeoff();
+
     // Note: After registration, aircraft are owned by the tower
     // In a real application, you'd use Rc or similar for shared ownership
 }

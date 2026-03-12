@@ -122,7 +122,7 @@ impl PhoneDisplay {
     fn _display(&self, parts: &[&str]) {
         if let (Some(&temp), Some(&hum)) = (parts.first(), parts.get(1)) {
             println!("    ┌─────────────────┐");
-            println!("    │ {}   │", "12:34:56");
+            println!("    │ 12:34:56   │");
             println!("    │ {}°C  │", temp);
             println!("    │ {}%   │", hum);
             println!("    └─────────────────┘");
@@ -270,8 +270,20 @@ pub fn example() {
 
     station.set_measurements(25.5, 65.0, 1015.0);
 
-    println!("\n2. All observers notified!");
-    println!("Note: Detach functionality is available but requires type coercion");
+    println!("\n2. YouTube Channel Example");
+    let channel = YouTubeChannel::new("Code Academy");
+    channel.upload_video("Design Patterns in Rust");
+
+    let subscriber1 = Subscriber::new("Alice");
+    let subscriber2 = Subscriber::new("Bob");
+
+    println!("\nNotifying subscribers:");
+    subscriber1.notified("Design Patterns in Rust");
+    println!("{} subscribed to {}", subscriber1.get_name(), channel.name);
+    subscriber2.notified("Design Patterns in Rust");
+    println!("{} subscribed to {}", subscriber2.get_name(), channel.name);
+
+    println!("\nNote: Detach functionality is available but requires type coercion");
 }
 
 #[cfg(test)]

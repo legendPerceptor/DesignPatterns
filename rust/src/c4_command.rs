@@ -46,9 +46,11 @@ impl Default for Light {
 }
 
 pub struct Stereo {
+    #[allow(dead_code)]
     state: StereoState,
 }
 
+#[allow(dead_code)]
 struct StereoState {
     on: bool,
     cd: bool,
@@ -80,6 +82,12 @@ impl Stereo {
 
     pub fn set_volume(&self, level: u8) {
         println!("Stereo: volume set to {}", level);
+    }
+
+    // Helper method to show state (for demonstration)
+    #[allow(dead_code)]
+    fn get_state(&self) -> &StereoState {
+        &self.state
     }
 }
 
@@ -243,6 +251,17 @@ pub fn example() {
     let living_room_light = Light::new();
     let stereo = Stereo::new();
 
+    println!("=== Testing Light directly ===");
+    living_room_light.on();
+    living_room_light.dim(50);
+    living_room_light.off();
+
+    println!("\n=== Testing Stereo directly ===");
+    stereo.on();
+    stereo.set_cd();
+    stereo.set_volume(11);
+    stereo.off();
+
     // Create commands
     let light_on = Box::new(LightOnCommand::new(living_room_light));
     let light_off = Box::new(LightOffCommand::new(Light::new()));
@@ -253,7 +272,7 @@ pub fn example() {
     remote.set_command(0, light_on, light_off);
     remote.set_command(1, stereo_on, Box::new(LightOffCommand::new(Light::new())));
 
-    // Test
+    println!("\n=== Using Remote Control ===");
     remote.on_button_was_pressed(0);
     remote.off_button_was_pressed(0);
 

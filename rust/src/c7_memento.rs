@@ -237,6 +237,12 @@ pub fn example() {
     doc.write(" World");
     history.save_state(doc.save());
 
+    // Demonstrate delete_last and get_content
+    println!("\n--- Delete and Get Content Demo ---");
+    println!("Current content: \"{}\"", doc.get_content());
+    doc.delete_last(6); // Delete " World"
+    println!("After deleting 6 chars: \"{}\"", doc.get_content());
+
     println!("\n--- Undo ---");
     if let Some(memento) = history.undo() {
         doc.restore(memento);
@@ -255,6 +261,16 @@ pub fn example() {
 
     hero.take_damage(30);
     let checkpoint2 = hero.create_checkpoint();
+
+    println!("\nHealing character...");
+    hero.heal(20);
+
+    hero.take_damage(50);
+    println!("\nRestoring to checkpoint 1...");
+    hero.restore_from_checkpoint(&checkpoint1);
+
+    println!("\nRestoring to checkpoint 2...");
+    hero.restore_from_checkpoint(&checkpoint2);
 
     hero.take_damage(50);
     println!("\nRestoring to checkpoint 2...");

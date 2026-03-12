@@ -174,11 +174,17 @@ pub fn example() {
 
     println!("First display - should load image:");
     proxy.display();
+    println!("Filename: {}", proxy.get_filename());
 
     println!("\nSecond display - uses cached image:");
     proxy.display();
 
-    println!("\n2. Protection Proxy (Access Control):");
+    println!("\n2. Simple Proxy (shows lazy initialization):");
+    let proxy = ProxyImage::new("photo.jpg");
+    println!("Filename: {}", proxy.get_filename());
+    proxy.display();
+
+    println!("\n3. Protection Proxy (Access Control):");
     let internet = ProxyInternet::new();
 
     println!("\nTrying to access allowed site:");
@@ -186,6 +192,10 @@ pub fn example() {
 
     println!("\nTrying to access blocked site:");
     internet.connect_to("blocked.com");
+
+    println!("\n4. Direct Internet access (no proxy):");
+    let direct = Internet::new();
+    direct.connect_to("example.com");
 }
 
 #[cfg(test)]

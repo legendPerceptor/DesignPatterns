@@ -167,8 +167,18 @@ pub fn example() {
     playlist.add(Song::new("Stairway to Heaven", "Led Zeppelin"));
     playlist.add(Song::new("Hotel California", "Eagles"));
 
-    println!("   Forward iteration:");
+    println!("   Playlist size: {}", playlist.size());
+
+    println!("\n   Forward iteration:");
     let mut iterator = playlist.create_iterator();
+    while iterator.has_next() {
+        if let Some(song) = iterator.next() {
+            println!("     \"{}\" by {}", song.title, song.artist);
+        }
+    }
+
+    println!("\n   Resetting and iterating again:");
+    iterator.reset();
     while iterator.has_next() {
         if let Some(song) = iterator.next() {
             println!("     \"{}\" by {}", song.title, song.artist);

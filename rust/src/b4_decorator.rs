@@ -189,6 +189,18 @@ pub fn example() {
     beverage = Box::new(Mocha::new(beverage));
     beverage = Box::new(Whip::new(beverage));
     println!("  {} ${:.2}", beverage.description(), beverage.cost());
+
+    println!("\n4. Espresso + Milk:");
+    let beverage: Box<dyn Beverage> = Box::new(Milk::new(Box::new(Espresso)));
+    println!("  {} ${:.2}", beverage.description(), beverage.cost());
+
+    println!("\n5. Using generic CondimentDecorator:");
+    let beverage: Box<dyn Beverage> = Box::new(CondimentDecorator::new(
+        Box::new(HouseBlend),
+        "Caramel",
+        0.25,
+    ));
+    println!("  {} ${:.2}", beverage.description(), beverage.cost());
 }
 
 #[cfg(test)]
